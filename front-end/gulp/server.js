@@ -35,6 +35,7 @@ function browserSyncInit(baseDir, browser) {
    */
   // server.middleware = proxyMiddleware('/users', {target: 'http://jsonplaceholder.typicode.com', changeOrigin: true});
 
+  // Set the server to run on port 8080
   browserSync.instance = browserSync.init({
     port: 8080,
     startPath: '/',

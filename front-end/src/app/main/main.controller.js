@@ -1,32 +1,25 @@
+/*
+    Author: Juan M. Chavez
+    Date: 3-2-17
+    File: main.controller.js
+    Description: This is the controller used in main.html
+
+    3/2 JMC
+        Removed the sample content
+        Added the $log service for testing
+        Created the postMessage() method
+*/
+
 export class MainController {
-  constructor ($timeout, webDevTec, toastr) {
-    'ngInject';
+    constructor ($log) {
+        'ngInject';
 
-    this.awesomeThings = [];
-    this.classAnimation = '';
-    this.creationDate = 1488413193892;
-    this.toastr = toastr;
+        // Assign properties for this class
+        this.$log = $log;
+    }
 
-    this.activate($timeout, webDevTec);
-  }
-
-  activate($timeout, webDevTec) {
-    this.getWebDevTec(webDevTec);
-    $timeout(() => {
-      this.classAnimation = 'rubberBand';
-    }, 4000);
-  }
-
-  getWebDevTec(webDevTec) {
-    this.awesomeThings = webDevTec.getTec();
-
-    angular.forEach(this.awesomeThings, (awesomeThing) => {
-      awesomeThing.rank = Math.random();
-    });
-  }
-
-  showToastr() {
-    this.toastr.info('Fork <a href="https://github.com/Swiip/generator-gulp-angular" target="_blank"><b>generator-gulp-angular</b></a>');
-    this.classAnimation = '';
-  }
+    // Method to handle $http post requests for creating messages
+    postMessage() {
+        this.$log.log("Post");
+    }
 }
