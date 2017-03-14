@@ -1,0 +1,59 @@
+<!--
+    Author: Juan M. Chavez
+    Date: 3-10-17
+    File: auth.html
+    Description: The login/registration view for the home page
+
+    3/10
+        Created the file
+        Added two panels for login and register
+
+    3/13
+        Setup the angular necessary to get the compareTo directive to work
+        Added an ng-show to display text if the passwords don't match
+-->
+
+<div class="container">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Login</div>
+            <div class="panel-body">
+                <form>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Register</div>
+            <div class="panel-body">
+                <form name="register" ng-submit="auth.register()">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" class="form-control" name="pwd" ng-model="pwd">
+                    </div>
+                    <div class="form-group">
+                        <label>Password Confirm</label>
+                        <input type="password" class="form-control" compare-to="pwd" name="pwdConfirm" ng-model="pwdConfirm">
+                    </div>
+                    <p ng-show="register.pwdConfirm.$dirty && register.pwdConfirm.$invalid" style="color: red">Passwords do not match</p>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
