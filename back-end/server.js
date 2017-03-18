@@ -21,52 +21,30 @@
 
 var express = require('express');
 var app = express();
+var port = 8080;
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-var port = 8080;
 
-// Database, Schema, and Model
-var database;
+// Controllers
+var auth = require('./controllers/auth');
+var message = require('./controllers/message');
 
-// Mongoose's method to create a model/class
-var Message = mongoose.model('Message', {
-    msg: String
-});
-
+// Middleware
+var checkAuthenticated = require('./services/checkAuthenticated');
+var cores = require('./services/cores');
 app.use(bodyParser.json());
+app.use(cores);
 
-// Middleware to fix a CORS issue
-app.use(function(req, res, next){
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    next();
-});
-
-// Endpoint for the client to retrieve all of the messages in the database
-app.get('/api/message', getMessages);
-
-// Endpoint for post requests to '/api/message'
-app.post('/api/message', function(req, res){
-    console.log(req.body);
-
-    // Create a Message object and insert a string/req.body, then save it
-    var message = new Message(req.body);
-    message.save();
-    res.status(200);
-});
-
-// Get the messages from the database
-function getMessages(req, res){
-    Message.find({}).exec(function(err, data){
-        res.send(data);
-    });
-}
+// HTTP endpoints
+app.get('/api/message', message.get);
+app.post('/api/message', checkAuthenticated, message.post);
+app.post('/auth/register', auth.register);
+app.post('/auth/login', auth.login);
 
 // Connection to mongodb database
 mongoose.connect('mongodb://localhost:27017/test', function(err, db){
     if(!err){
         console.log('Connected to MongoDB');
-        database = db;
     }
 });
 

@@ -11,6 +11,10 @@
     3/13
         Setup the angular necessary to get the compareTo directive to work
         Added an ng-show to display text if the passwords don't match
+
+    3/14
+        Added models to the inputs for our registration form
+        The button is now disabled until the form is valid
 -->
 
 <div class="container">
@@ -18,14 +22,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">Login</div>
             <div class="panel-body">
-                <form>
+                <form ng-submit="auth.login()">
+                    <span ng-show="auth.error">{{auth.error}}</span>
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="email" class="form-control">
+                        <input type="email" class="form-control" ng-model="auth.login.user.email">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control">
+                        <input type="password" class="form-control" ng-model="auth.login.user.pwd">
                     </div>
                     <button type="submit" class="btn btn-default">Submit</button>
                 </form>
@@ -40,18 +45,18 @@
                 <form name="register" ng-submit="auth.register()">
                     <div class="form-group">
                         <label>Email Address</label>
-                        <input type="email" class="form-control">
+                        <input type="email" class="form-control" ng-model="auth.user.email" ng-required="true">
                     </div>
                     <div class="form-group">
                         <label>Password</label>
-                        <input type="password" class="form-control" name="pwd" ng-model="pwd">
+                        <input type="password" class="form-control" name="pwd" ng-model="auth.user.pwd" ng-required="true">
                     </div>
                     <div class="form-group">
                         <label>Password Confirm</label>
-                        <input type="password" class="form-control" compare-to="pwd" name="pwdConfirm" ng-model="pwdConfirm">
+                        <input type="password" class="form-control" compare-to="auth.user.pwd" name="pwdConfirm" ng-model="pwdConfirm" ng-required="true">
                     </div>
                     <p ng-show="register.pwdConfirm.$dirty && register.pwdConfirm.$invalid" style="color: red">Passwords do not match</p>
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-primary" ng-disabled="register.$invalid">Submit</button>
                 </form>
             </div>
         </div>

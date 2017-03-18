@@ -1,4 +1,4 @@
-<nav class="navbar navbar-static-top navbar-inverse">
+<nav class="navbar navbar-static-top navbar-inverse" ng-controller="NavbarController as nav">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" ui-sref="home">
@@ -9,7 +9,8 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
       <ul class="nav navbar-nav">
         <li ui-sref-active="active"><a ui-sref="home">Home</a></li>
-        <li ui-sref-active="active"><a ui-sref="auth">Login</a></li>
+        <li ng-if="!nav.isAuthenticated()" ui-sref-active="active"><a ui-sref="auth"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li ng-if="nav.isAuthenticated()"><a ng-click="nav.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
   </div>
